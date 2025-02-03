@@ -1,23 +1,21 @@
 import simpleGit from 'simple-git';
+import { logError } from '../utils/logger';
 
 const git = simpleGit();
 
-export async function getGitDiff(range: string): Promise<string> {
+export async function getGitDiff(range: string, cliExcludes: string[] = []): Promise<string> {
   try {
-    const [from, to] = range.split(' ');
-    if (!from || !to) {
-      throw new Error('❗ Invalid diff range. Please specify both --from and --to.');
+    const excludePatterns = cliExcludes.map((pattern) => `:(exclude)${pattern}`);
+
+    if (range === 'HEAD') {
+      // 比較 HEAD 與當前工作區
+      return await git.diff(['HEAD', ...excludePatterns]);
     }
 
-    // 確認 commit 是否存在
-    await git.revparse([from]);
-    await git.revparse([to]);
-
-    const diffRange = `${from}..${to}`;
-    const diff = await git.diff([diffRange]);
-    return diff;
-  } catch (error) {
-    console.error('❌ Error while getting git diff:', error);
+    const [from, to] = range.split(' ');
+    return await git.diff([from, to, ...excludePatterns]);
+  } catch (error: unknown) {
+    logError('取得 Git Diff 時發生錯誤', error);
     return '';
   }
 }

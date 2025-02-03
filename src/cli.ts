@@ -13,8 +13,10 @@ program
 program
   .command('review')
   .description('Run AI code review for the latest changes')
-  .option('--from <commit>', 'Specify the starting commit for the diff', 'HEAD~1')
-  .option('--to <commit>', 'Specify the ending commit for the diff', 'HEAD')
+  .option('--from <commit>', 'Specify the starting commit for the diff') // 可選
+  .option('--to <commit>', 'Specify the ending commit for the diff')     // 可選
+  .option('--exclude <paths...>', 'Override exclude patterns (comma-separated)')
+  .option('--show-diff', 'Display the diff data sent to AI', false)
   .action((options) => {
     runReview(options);
   });

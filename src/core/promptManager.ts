@@ -5,6 +5,6 @@ export function getDefaultPrompt(): string {
 - 性能優化建議
 - 程式碼風格與一致性
 - 安全性問題
-請盡量提供具體且可操作的建議。
+請盡量提供具體且可操作的建議並使用台灣的正體中文與用詞。
   `.trim();
 }
