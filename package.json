@@ -1,6 +1,6 @@
 {
   "name": "ai-code-reviewer-cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "dist/cli.js",
   "bin": {
     "ai-review": "dist/cli.js"
@@ -9,7 +9,7 @@
     "build": "tsc",
     "pkg": "npm run build && NODE_OPTIONS=--no-deprecation pkg dist/cli.js --targets node18-macos-x64,node18-linux-x64,node18-win-x64 --out-path dist",
     "release": "standard-version",
-    "postrelease": "git push --follow-tags origin main && npm publish"
+    "postrelease": "git push --follow-tags origin master && npm publish"
   },
   "keywords": [
     "ai",
