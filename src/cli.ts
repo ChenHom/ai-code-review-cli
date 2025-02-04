@@ -20,7 +20,7 @@ const program = new Command();
 program
   .name('ai-review')
   .description('AI Code Reviewer CLI Tool')
-  .version('1.0.0');
+  .version('1.0.1');
 
 program
   .command('review')
