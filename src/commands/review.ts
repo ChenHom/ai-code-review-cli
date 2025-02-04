@@ -13,7 +13,7 @@ interface ReviewOptions {
 }
 
 export async function runReview(options: ReviewOptions) {
-  Logger.info('🚀 Starting AI Code Review...');
+  Logger.info('🚀 Starting AI Code Reviewer...');
 
   const cliExcludes = options.exclude || [];
   const diffRange = options.from && options.to ? `${options.from} ${options.to}` : 'HEAD';
@@ -39,7 +39,7 @@ export async function runReview(options: ReviewOptions) {
     const aiResponse = await reviewCodeWithAI(diff, prompt);
 
     spinner.succeed('✅ AI 審查完成！');
-    Logger.info('\n📋 **AI Code Review Result:**\n' + aiResponse);
+    Logger.info('\n📋 **AI Code Reviewer Result:**\n' + aiResponse);
   } catch (error) {
     spinner.fail('❌ AI 審查失敗！');
     Logger.error('AI 程式碼審查過程中發生錯誤', error);

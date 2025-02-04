@@ -1,18 +1,30 @@
 #!/usr/bin/env ts-node
 
+// 🚀 全域禁用 Node.js 的棄用警告
+process.removeAllListeners('warning');
+process.on('warning', (warning) => {
+  if (warning.name === 'DeprecationWarning') {
+    // 忽略所有 Deprecation 警告
+    return;
+  }
+  console.warn(warning); // 其他警告仍顯示
+});
+
 import { Command } from 'commander';
 import { runReview } from './commands/review';
+import { runInteractiveMode } from './commands/interactive';
+import { clearCache } from './core/promptManager';
 
 const program = new Command();
 
 program
   .name('ai-review')
-  .description('AI Code Review CLI Tool')
+  .description('AI Code Reviewer CLI Tool')
   .version('1.0.0');
 
 program
   .command('review')
-  .description('Run AI code review for the latest changes')
+  .description('Run AI Code Reviewer for the latest changes')
   .option('--from <commit>', 'Specify the starting commit for the diff')
   .option('--to <commit>', 'Specify the ending commit for the diff')
   .option('--exclude <paths...>', 'Override exclude patterns (comma-separated)')
@@ -22,4 +34,17 @@ program
     runReview(options);
   });
 
+program
+  .command('interactive')
+  .description('Run AI Code Reviewer in interactive mode')
+  .action(() => {
+    runInteractiveMode();
+  });
+
+program
+  .command('clear-cache')
+  .description('Clear the AI review prompt cache')
+  .action(() => {
+    clearCache();
+  });
 program.parse(process.argv);
