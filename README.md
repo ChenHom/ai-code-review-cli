@@ -2,7 +2,7 @@
 
 A powerful command-line interface (CLI) tool designed to perform automated code reviews using AI. This tool helps developers quickly identify potential issues, optimize performance, and maintain code quality.
 
-[中文](README.tw.md)
+[中文](./README.tw.md)
 
 ---
 
