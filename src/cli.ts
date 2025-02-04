@@ -14,13 +14,19 @@ import { Command } from 'commander';
 import { runReview } from './commands/review';
 import { runInteractiveMode } from './commands/interactive';
 import { clearCache } from './core/promptManager';
+import path from 'path';
+import { readFileSync } from 'fs';
 
 const program = new Command();
+
+const packageJson = JSON.parse(
+  readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8')
+);
 
 program
   .name('ai-review')
   .description('AI Code Reviewer CLI Tool')
-  .version('1.0.1');
+  .version(packageJson.version); // 自動讀取版本號
 
 program
   .command('review')
