@@ -1,6 +1,6 @@
 import { getGitDiff } from '../core/diffProcessor';
 import { reviewCodeWithAI } from '../core/openaiService';
-import { getDefaultPrompt, getCustomPrompt } from '../core/promptManager';
+import { getFinalPrompt } from '../core/promptManager';
 import ora from 'ora';
 import { Logger } from '../utils/logger';
 
@@ -9,8 +9,7 @@ interface ReviewOptions {
   to?: string;
   exclude?: string[];
   showDiff?: boolean;
-  prompt?: string;
-  promptFile?: string;
+  promptTemplate?: string;
 }
 
 export async function runReview(options: ReviewOptions) {
@@ -34,7 +33,7 @@ export async function runReview(options: ReviewOptions) {
       Logger.info('\n📤 **傳送給 AI 的 Diff 資料:**\n' + diff);
     }
 
-    const prompt = options.prompt || (options.promptFile ? await getCustomPrompt(options.promptFile) : getDefaultPrompt());
+    const prompt = await getFinalPrompt(options.promptTemplate);
 
     spinner.start('🤖 AI 正在審查程式碼，請稍候...');
     const aiResponse = await reviewCodeWithAI(diff, prompt);
@@ -46,4 +45,3 @@ export async function runReview(options: ReviewOptions) {
     Logger.error('AI 程式碼審查過程中發生錯誤', error);
   }
 }
-

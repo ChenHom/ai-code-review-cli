@@ -17,8 +17,7 @@ program
   .option('--to <commit>', 'Specify the ending commit for the diff')
   .option('--exclude <paths...>', 'Override exclude patterns (comma-separated)')
   .option('--show-diff', 'Display the diff data sent to AI', false)
-  .option('--prompt <customPrompt>', 'Custom prompt for AI code review')
-  .option('--prompt-file <filePath>', 'Path to a custom prompt file')
+  .option('--prompt-template <templateName>', 'Specify a prompt template to use')
   .action((options) => {
     runReview(options);
   });
