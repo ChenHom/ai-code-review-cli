@@ -3,21 +3,27 @@
   "version": "1.0.0",
   "main": "dist/cli.js",
   "bin": {
-    "ai-code-reviewer": "dist/cli.js"
+    "ai-reviewer": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
-    "pkg": "npm run build && NODE_OPTIONS=--no-deprecation pkg dist/cli.js --targets node18-macos-x64,node18-linux-x64,node18-win-x64 --out-path dist"
+    "pkg": "npm run build && NODE_OPTIONS=--no-deprecation pkg dist/cli.js --targets node18-macos-x64,node18-linux-x64,node18-win-x64 --out-path dist",
+    "prepare": "npm run build"
   },
   "keywords": [
     "ai",
     "code",
-    "reviewer",
-    "cli"
+    "review",
+    "cli",
+    "code-review",
+    "automation"
   ],
   "author": "Hom Chen",
   "license": "ISC",
-  "description": "A CLI tool to help you review your code",
+  "description": "A CLI tool to help you review your code using AI",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",
