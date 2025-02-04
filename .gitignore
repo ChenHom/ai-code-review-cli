@@ -28,3 +28,5 @@ node_modules/
 
 # ai-review-cache
 .ai-review-cache.json
+
+dist/

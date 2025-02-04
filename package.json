@@ -1,14 +1,23 @@
 {
-  "name": "ai-code-review-cli",
+  "name": "ai-code-reviewer-cli",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "dist/cli.js",
+  "bin": {
+    "ai-code-reviewer": "dist/cli.js"
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "build": "tsc",
+    "pkg": "npm run build && NODE_OPTIONS=--no-deprecation pkg dist/cli.js --targets node18-macos-x64,node18-linux-x64,node18-win-x64 --out-path dist"
+  },
+  "keywords": [
+    "ai",
+    "code",
+    "reviewer",
+    "cli"
+  ],
+  "author": "Hom Chen",
   "license": "ISC",
-  "description": "",
+  "description": "A CLI tool to help you review your code",
   "dependencies": {
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",
