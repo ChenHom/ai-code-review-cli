@@ -31,17 +31,19 @@ async function readTemplateNames(dir: string): Promise<string[]> {
 }
 
 // 🚀 組合預設 Prompt 與自訂 Prompt
-export async function getFinalPrompt(templateName?: string): Promise<string> {
-  const defaultPrompt = getDefaultPrompt();
+export async function getFinalPrompt(templateName?: string, includeQualityScore: boolean = false): Promise<string> {
+  const basePrompt = getDefaultPrompt();
   const customPrompt = await getPromptTemplate(templateName);
 
-  return [defaultPrompt, customPrompt].filter(Boolean).join('\n\n').trim();
+  if (!includeQualityScore) return [basePrompt, customPrompt].filter(Boolean).join('\n\n').trim();
+
+  const qualityScoreInstructions = `\n\n請根據以下維度進行程式碼品質評分（0-100 分）：\n- 📝 Readability: [數值]\n- 🛠️ Maintainability: [數值]\n- 🚩 Potential Issues: [數值]\n- ⚡ Performance: [數值]\n\nComments: [評論說明]。`;
+
+  return [basePrompt, customPrompt, qualityScoreInstructions].filter(Boolean).join('\n\n').trim();
 }
 
 export function getDefaultPrompt(): string {
-  return `
-你是一位專業的程式碼審查 AI，請根據以下 Diff 提供程式碼審查建議：
-請盡量提供台灣用語的正體中文說明且保持專業性與清晰度與具體、簡短且可操作的建議。`
+  return `請盡量提供台灣用語的正體中文說明且保持專業性與清晰度與具體、簡短且可操作的建議。`
 }
 
 export async function getPromptTemplate(templateName?: string): Promise<string> {

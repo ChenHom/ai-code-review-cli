@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import { runReview } from './review';
 import { getAvailablePromptTemplates } from '../core/promptManager';
+import { parseAIResponse, formatQualityScore } from '../core/qualityScoreService'; // 確認已匯入
 
 export async function runInteractiveMode() {
   console.log('🚀 歡迎使用 AI Code Reviewer\n');
@@ -21,6 +22,7 @@ export async function runInteractiveMode() {
       choices: [
         { name: 'HEAD~1 到 HEAD', value: { from: 'HEAD~1', to: 'HEAD' } },
         { name: 'HEAD~2 到 HEAD', value: { from: 'HEAD~2', to: 'HEAD' } },
+        { name: '僅比較 HEAD', value: { from: 'HEAD' } },
         { name: '自訂範圍', value: 'custom' },
       ],
     },
@@ -31,28 +33,37 @@ export async function runInteractiveMode() {
       when: (answers) => answers.diffRange === 'custom',
       validate: (input) => {
         const parts = input.trim().split(' ');
-        return parts.length === 2 || '請輸入正確格式（如：HEAD~3 HEAD）';
+        return parts.length === 2 || '請輸入正確的格式 (例如: HEAD~1 HEAD)';
       },
     },
     {
       type: 'confirm',
       name: 'showDiff',
-      message: '是否要顯示傳送給 AI 的 Diff？',
+      message: '是否顯示 Diff 資料？',
+      default: false,
+    },
+    {
+      type: 'confirm',
+      name: 'showQualityScore',
+      message: '是否顯示程式碼品質評分？',
       default: false,
     },
   ]);
 
-  const { promptTemplate, diffRange, customRange, showDiff } = answers;
+  const reviewOptions: any = {
+    promptTemplate: answers.promptTemplate !== '使用預設模板' ? answers.promptTemplate : undefined,
+    showDiff: answers.showDiff,
+    showQualityScore: answers.showQualityScore,
+  };
 
-  const range =
-    diffRange === 'custom'
-      ? { from: customRange.split(' ')[0], to: customRange.split(' ')[1] }
-      : diffRange;
+  if (answers.diffRange === 'custom') {
+    const [from, to] = answers.customRange.trim().split(' ');
+    reviewOptions.from = from;
+    reviewOptions.to = to;
+  } else {
+    reviewOptions.from = answers.diffRange.from;
+    reviewOptions.to = answers.diffRange.to;
+  }
 
-  await runReview({
-    from: range.from,
-    to: range.to,
-    showDiff,
-    promptTemplate: promptTemplate === '使用預設模板' ? undefined : promptTemplate,
-  });
+  await runReview(reviewOptions);
 }

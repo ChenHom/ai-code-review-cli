@@ -36,6 +36,7 @@ program
   .option('--exclude <paths...>', 'Override exclude patterns (comma-separated)')
   .option('--show-diff', 'Display the diff data sent to AI', false)
   .option('--prompt-template <templateName>', 'Specify a prompt template to use')
+  .option('--show-quality-score', 'Display code quality score from AI analysis')
   .action((options) => {
     runReview(options);
   });
