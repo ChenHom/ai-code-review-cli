@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/ChenHom/ai-code-reviewer-cli/compare/v1.3.2...v1.3.3) (2025-02-04)
+
+
+### Features
+
+* **cli:** 新增顯示程式碼品質評分的選項 ([f0be14b](https://github.com/ChenHom/ai-code-reviewer-cli/commit/f0be14baf5a2cd60f769909e524d93a2d8f2cc33))
+
 ### [1.3.2](https://github.com/ChenHom/ai-code-reviewer-cli/compare/v1.3.1...v1.3.2) (2025-02-04)
 
 ### [1.3.1](https://github.com/ChenHom/ai-code-reviewer-cli/compare/v1.3.0...v1.3.1) (2025-02-04)
