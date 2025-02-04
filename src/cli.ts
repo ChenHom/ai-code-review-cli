@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 // 🚀 全域禁用 Node.js 的棄用警告
 process.removeAllListeners('warning');
