@@ -92,6 +92,6 @@ npm run pkg
 
 ## 📄 **License**
 
-MIT License
+ISC License
 
 ---
