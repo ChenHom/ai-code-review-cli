@@ -1,6 +1,6 @@
 {
   "name": "ai-code-reviewer-cli",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "main": "dist/cli.js",
   "bin": {
     "ai-review": "dist/cli.js"
