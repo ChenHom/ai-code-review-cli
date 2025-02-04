@@ -13,10 +13,12 @@ program
 program
   .command('review')
   .description('Run AI code review for the latest changes')
-  .option('--from <commit>', 'Specify the starting commit for the diff') // 可選
-  .option('--to <commit>', 'Specify the ending commit for the diff')     // 可選
+  .option('--from <commit>', 'Specify the starting commit for the diff')
+  .option('--to <commit>', 'Specify the ending commit for the diff')
   .option('--exclude <paths...>', 'Override exclude patterns (comma-separated)')
   .option('--show-diff', 'Display the diff data sent to AI', false)
+  .option('--prompt <customPrompt>', 'Custom prompt for AI code review')
+  .option('--prompt-file <filePath>', 'Path to a custom prompt file')
   .action((options) => {
     runReview(options);
   });
